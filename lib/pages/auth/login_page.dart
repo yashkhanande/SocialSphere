@@ -7,7 +7,12 @@ class LoginPage extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Center(child: Text("Login page here")),
+      body: SingleChildScrollView(child: 
+      Column(
+        children: [
+          Text("Login")
+        ],
+      )),
     );
   }
 }
