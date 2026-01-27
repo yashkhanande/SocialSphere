@@ -7,6 +7,7 @@ import 'package:social_sphere/controllers/user_controller.dart';
 import 'package:social_sphere/firebase_options.dart';
 import 'package:social_sphere/pages/auth/auth_gate.dart';
 import 'package:social_sphere/pages/auth/sign_up_page.dart';
+import 'package:social_sphere/pages/onboarding/onboarding_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.background,
         brightness: Brightness.dark,
       ),
-      home: AuthGate(),
+      home: OnboardingPage(),
     );
   }
 }
