@@ -17,7 +17,7 @@ class ProfilePhoto extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.gold, width: 1),
         image: DecorationImage(
-          image: AssetImage(user.profile_photo),
+          image: AssetImage("assets/aniket.jpeg"),
           fit: BoxFit.cover,
         ),
       ),

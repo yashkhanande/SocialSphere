@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sphere/components/event_card.dart';
 import 'package:social_sphere/components/profile_photo.dart';
+import 'package:social_sphere/controllers/auth_controller.dart';
 import 'package:social_sphere/controllers/user_controller.dart';
 import 'package:social_sphere/widgets/stories.dart';
 
 class HomeTab extends StatelessWidget {
-  final UserController user = Get.find();
+  final UserController userController = Get.find();
+  final AuthController authController = Get.find();
+
   HomeTab({super.key});
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class HomeTab extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            user.userName.split(" ").first,
+                            userController.user.value!.name.split(" ").first,
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w700,

@@ -1,19 +1,14 @@
 import 'package:get/get.dart';
+import 'package:social_sphere/models/user_model.dart';
 
 class UserController extends GetxController {
-  final userName = "Aniket Tekam";
-  final profile_photo = "assets/aniket.jpeg";
-  final User user = User(
-    name: "Aniket Tekam",
-    email: "aniket@example.com",
-    profilePhoto: "assets/aniket.jpeg",
-  );
+  Rx<AppUser?> user = Rx<AppUser?>(null);
+
+  void setUser(AppUser appUser){
+    user.value = appUser;
+  }
+  void clearUser(){
+    user.value = null;
+  }
 }
 
-class User {
-  final String? name;
-  final String? email;
-  final String? profilePhoto;
-
-  User({this.name, this.email, this.profilePhoto});
-}

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:social_sphere/components/bottom_nav_bar.dart';
 import 'package:social_sphere/controllers/nav_controller.dart';
 
-class Homepage extends StatelessWidget {
-  Homepage({super.key});
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
 
   final NavController nav = Get.put(NavController());
   @override
@@ -36,11 +36,4 @@ class Homepage extends StatelessWidget {
   }
 }
 
-class ProfileTab extends StatelessWidget {
-  const ProfileTab({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Profile"));
-  }
-}
