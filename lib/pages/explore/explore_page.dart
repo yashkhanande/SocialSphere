@@ -39,8 +39,6 @@ class ExplorePage extends StatelessWidget {
                   ),
                   Spacer(),
                   SearchButton(),
-                  const SizedBox(width: 10),
-                  ProfilePhoto(),
                 ],
               ),
             ),

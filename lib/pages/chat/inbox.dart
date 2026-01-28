@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:social_sphere/components/categories.dart';
 import 'package:social_sphere/components/chat_card.dart';
 import 'package:social_sphere/components/profile_photo.dart';
 import 'package:social_sphere/components/search_button.dart';
 import 'package:social_sphere/widgets/stories.dart';
 
 class Inbox extends StatelessWidget {
+  final categories = const [
+    {'name': 'All', 'icon': 'assets/all.png'},
+    {'name': 'Coffee', 'icon': 'assets/coffee.png'},
+    {'name': 'Work', 'icon': 'assets/work.png'},
+    {'name': 'Game', 'icon': 'assets/game.png'},
+    {'name': 'Game', 'icon': 'assets/game.png'},
+  ];
   const Inbox({super.key});
   @override
   Widget build(BuildContext context) {
@@ -42,42 +50,41 @@ class Inbox extends StatelessWidget {
                     ),
                     Spacer(),
                     SearchButton(),
-                    const SizedBox(width: 10),
-                    ProfilePhoto(),
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
-              Stories(),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  children: List.generate(
+                    categories.length,
+                    (index) => Categories(
+                      index: index,
+                      category: categories[index]['name']!,
+                      imagePath: categories[index]['icon']!,
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 10),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  width: MediaQuery.widthOf(context),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.05),
-                    border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.1),
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      ChatCard(),
-                      ChatCard(),
-                      ChatCard(),
-                      ChatCard(),
-                      ChatCard(),
-                      ChatCard(),
-                      ChatCard(),
-                      ChatCard(),
-                      ChatCard(),
-                      ChatCard(),
-                    ],
-                  ),
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    ChatCard(),
+                    ChatCard(),
+                    ChatCard(),
+                    ChatCard(),
+                    ChatCard(),
+                    ChatCard(),
+                    ChatCard(),
+                    ChatCard(),
+                    ChatCard(),
+                    ChatCard(),
+                  ],
                 ),
               ),
             ],

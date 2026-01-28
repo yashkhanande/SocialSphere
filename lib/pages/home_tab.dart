@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sphere/components/event_card.dart';
+import 'package:social_sphere/components/live_event_card.dart';
+import 'package:social_sphere/components/notification_button.dart';
 import 'package:social_sphere/components/profile_photo.dart';
 import 'package:social_sphere/controllers/auth_controller.dart';
 import 'package:social_sphere/controllers/user_controller.dart';
@@ -30,26 +32,58 @@ class HomeTab extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Good Evening,",
+                            "Social Sphere",
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          Text(
-                            userController.user.value!.name.split(" ").first,
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xff9CA3AF),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Spacer(),
-                    ProfilePhoto(),
+                    NotificationButton(),
                   ],
+                ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    "Live Now !",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                  ),
+                  Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      Get.snackbar(
+                        "Coming soon",
+                        "we are currently working on this app ",
+                      );
+                    },
+                    child: Text("Map View"),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      LiveEventCard(
+                        image: "assets/seedhe_maut.jpg",
+                        title: "Seedhe Maut - SMX Tour || Nagpur",
+                      ),
+                      LiveEventCard(
+                        image: "assets/seedhe_maut.jpg",
+                        title: "Seedhe Maut - SMX Tour || Nagpur",
+                      ),
+                      LiveEventCard(
+                        image: "assets/seedhe_maut.jpg",
+                        title: "Seedhe Maut - SMX Tour || Nagpur",
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -57,16 +91,6 @@ class HomeTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Active Circles",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Stories(),
-                    const SizedBox(height: 30),
                     Text(
                       "You may like this",
                       style: TextStyle(

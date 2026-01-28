@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.background,
         brightness: Brightness.dark,
       ),
-      home: OnboardingPage(),
+      home: AuthGate(),
     );
   }
 }

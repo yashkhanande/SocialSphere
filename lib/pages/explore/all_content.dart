@@ -13,43 +13,6 @@ class AllContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Text(
-                "Live Now !",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-              ),
-              Spacer(),
-              TextButton(
-                onPressed: () {
-                  Get.snackbar(
-                    "Coming soon",
-                    "we are currently working on this app ",
-                  );
-                },
-                child: Text("Map View"),
-              ),
-            ],
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                LiveEventCard(
-                  image: "assets/seedhe_maut.jpg",
-                  title: "Seedhe Maut - SMX Tour || Nagpur",
-                ),
-                LiveEventCard(
-                  image: "assets/seedhe_maut.jpg",
-                  title: "Seedhe Maut - SMX Tour || Nagpur",
-                ),
-                LiveEventCard(
-                  image: "assets/seedhe_maut.jpg",
-                  title: "Seedhe Maut - SMX Tour || Nagpur",
-                ),
-              ],
-            ),
-          ),
           const SizedBox(height: 10),
           Row(
             children: [
