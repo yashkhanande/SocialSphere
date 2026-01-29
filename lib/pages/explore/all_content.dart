@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sphere/components/activity_card.dart';
 import 'package:social_sphere/components/commmunity_card.dart';
-import 'package:social_sphere/components/live_event_card.dart';
 
 class AllContent extends StatelessWidget {
   const AllContent({super.key});

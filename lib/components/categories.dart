@@ -1,60 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:social_sphere/controllers/category_controller.dart';
+import 'package:get/state_manager.dart';
 
 class Categories extends StatelessWidget {
-  Categories({
+  final int index;
+  final String category;
+  final String imagePath;
+  final VoidCallback onTap;
+  final bool isSelected;
+
+  const Categories({
     super.key,
     required this.index,
     required this.category,
     required this.imagePath,
+    required this.onTap,
+    required this.isSelected,
   });
-  final int index;
-  final String category;
-  final String imagePath;
-  final CategoryController _cat = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _cat.changeCategory(index),
-      child: Obx(() {
-        final isSelected = _cat.currentIndex.value == index;
-
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          margin: const EdgeInsets.only(right: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: !isSelected ? Colors.black : Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: isSelected
-                ? [
-                    BoxShadow(
-                      blurRadius: 10,
-                      color: Colors.black.withOpacity(0.25),
-                    ),
-                  ]
-                : [],
-          ),
-          child: Row(
-            children: [
-              Image.asset(
-                imagePath,
-                height: 20,
-                color: !isSelected ? Colors.white : Colors.black,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                category,
-                style: TextStyle(
-                  color: !isSelected ? Colors.white : Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        );
-      }),
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? Colors.white.withOpacity(0.2)
+              : Colors.white.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          children: [
+            Image.asset(imagePath, height: 32),
+            const SizedBox(height: 6),
+            Text(category),
+          ],
+        ),
+      ),
     );
   }
 }

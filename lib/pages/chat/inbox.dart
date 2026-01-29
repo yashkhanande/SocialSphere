@@ -53,20 +53,7 @@ class Inbox extends StatelessWidget {
                   ],
                 ),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  children: List.generate(
-                    categories.length,
-                    (index) => Categories(
-                      index: index,
-                      category: categories[index]['name']!,
-                      imagePath: categories[index]['icon']!,
-                    ),
-                  ),
-                ),
-              ),
+              
               const SizedBox(height: 10),
               Padding(
                 padding: EdgeInsets.all(8),

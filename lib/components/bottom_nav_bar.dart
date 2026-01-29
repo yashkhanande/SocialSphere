@@ -75,7 +75,7 @@ class BottomNavBar extends StatelessWidget {
             bottom: 38,
             child: InkWell(
               onTap: () {
-                Get.put(CreateEventController());
+               
                 Get.to(() => CreateEventPage());
               },
               child: Container(

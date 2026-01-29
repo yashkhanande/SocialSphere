@@ -6,5 +6,4 @@ class CategoryController extends GetxController {
   void changeCategory(int index){
     currentIndex.value = index;
   }
-   
 }

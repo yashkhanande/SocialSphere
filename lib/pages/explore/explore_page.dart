@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:social_sphere/components/categories.dart';
-import 'package:social_sphere/components/profile_photo.dart';
 import 'package:social_sphere/components/search_button.dart';
 import 'package:social_sphere/controllers/category_controller.dart';
 import 'package:social_sphere/pages/explore/all_content.dart';
@@ -52,6 +51,10 @@ class ExplorePage extends StatelessWidget {
                     index: index,
                     category: categories[index]['name']!,
                     imagePath: categories[index]['icon']!,
+                    onTap: () {
+                      cat.currentIndex.value = index;
+                    },
+                    isSelected: cat.currentIndex.value == index,
                   ),
                 ),
               ),

@@ -12,7 +12,7 @@ class CreateEventPage extends StatelessWidget {
     {'name': 'Work', 'icon': 'assets/work.png'},
     {'name': 'Game', 'icon': 'assets/game.png'},
   ];
-  final controller = Get.find<CreateEventController>();
+  final controller = Get.put(CreateEventController());
 
   CreateEventPage({super.key});
 
@@ -92,21 +92,31 @@ class CreateEventPage extends StatelessWidget {
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Row(
-                              children: List.generate(
-                                categories.length,
-                                (index) => Categories(
-                                  index: index,
-                                  category: categories[index]['name']!,
-                                  imagePath: categories[index]['icon']!,
+                            child: Obx(
+                              () => Row(
+                                children: List.generate(
+                                  categories.length,
+                                  (index) => Categories(
+                                    index: index,
+                                    category: categories[index]['name']!,
+                                    imagePath: categories[index]['icon']!,
+                                    isSelected:
+                                        controller.selectedCategory.value ==
+                                        categories[index]['name']!,
+                                    onTap: () {
+                                      controller.selectedCategory.value =
+                                          categories[index]['name']!;
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 20),
-                          Text("Name"),
+                          Text("title"),
                           const SizedBox(height: 10),
                           TextField(
+                            controller: controller.title,
                             decoration: InputDecoration(
                               hintText: "Enter your event name...",
                               filled: true,
@@ -128,6 +138,7 @@ class CreateEventPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           TextField(
+                            controller: controller.description,
                             decoration: InputDecoration(
                               hintText: "This is the description of the event ",
                               filled: true,
@@ -214,6 +225,7 @@ class CreateEventPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           TextField(
+                            controller: controller.location,
                             decoration: InputDecoration(
                               hintText: "Enter the location of the event",
                               filled: true,
@@ -236,8 +248,8 @@ class CreateEventPage extends StatelessWidget {
                     InkWell(
                       borderRadius: BorderRadius.circular(20),
                       onTap: () {
-                        if (controller.peopleCount.value > 0) {
-                          Get.to(() => IdealPersonPage());
+                        if (controller.validate()) {
+                          controller.createEvent();
                         }
                       },
                       child: Container(
@@ -250,13 +262,17 @@ class CreateEventPage extends StatelessWidget {
                           color: Colors.white.withValues(alpha: .05),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Text(
-                          "Continue",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
+                        child: Obx(
+                          () => controller.isLoading.value
+                              ? Center(child: CircularProgressIndicator())
+                              : Text(
+                                  "Create Event",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
