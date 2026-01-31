@@ -44,10 +44,15 @@ class LoginPage extends StatelessWidget {
               },
               child: Text("Don't have an account? Sign Up"),
             ),
-            AppButton(
-              labelText: "Login",
-              ontap: () => authController.login(email.text, password.text),
-            ),
+            Obx(() {
+              if (authController.isLoading.value) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return AppButton(
+                labelText: "Login",
+                ontap: () => authController.login(email.text, password.text),
+              );
+            }),
           ],
         ),
       ),

@@ -2,8 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sphere/components/categories.dart';
-import 'package:social_sphere/controllers/create_event_controller.dart';
-import 'package:social_sphere/pages/event/ideal_person_page.dart';
+import 'package:social_sphere/controllers/event_controller.dart';
 
 class CreateEventPage extends StatelessWidget {
   final categories = const [
@@ -12,13 +11,14 @@ class CreateEventPage extends StatelessWidget {
     {'name': 'Work', 'icon': 'assets/work.png'},
     {'name': 'Game', 'icon': 'assets/game.png'},
   ];
-  final controller = Get.put(CreateEventController());
-
+  final controller = Get.find<EventController>();
+  final title = TextEditingController();
+  final description = TextEditingController();
+  final location = TextEditingController();
   CreateEventPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -116,7 +116,7 @@ class CreateEventPage extends StatelessWidget {
                           Text("title"),
                           const SizedBox(height: 10),
                           TextField(
-                            controller: controller.title,
+                            controller: title,
                             decoration: InputDecoration(
                               hintText: "Enter your event name...",
                               filled: true,
@@ -138,7 +138,7 @@ class CreateEventPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           TextField(
-                            controller: controller.description,
+                            controller: description,
                             decoration: InputDecoration(
                               hintText: "This is the description of the event ",
                               filled: true,
@@ -225,7 +225,7 @@ class CreateEventPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           TextField(
-                            controller: controller.location,
+                            controller: location,
                             decoration: InputDecoration(
                               hintText: "Enter the location of the event",
                               filled: true,
@@ -248,8 +248,13 @@ class CreateEventPage extends StatelessWidget {
                     InkWell(
                       borderRadius: BorderRadius.circular(20),
                       onTap: () {
-                        if (controller.validate()) {
-                          controller.createEvent();
+                        if (controller.validate(title.text, location.text)) {
+                          controller.createEvent(
+                            title.text,
+                            description.text,
+                            location.text,
+                            controller.selectedCategory.value,
+                          );
                         }
                       },
                       child: Container(

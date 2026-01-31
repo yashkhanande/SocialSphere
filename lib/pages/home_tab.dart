@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sphere/components/event_card.dart';
@@ -5,16 +7,20 @@ import 'package:social_sphere/components/live_event_card.dart';
 import 'package:social_sphere/components/notification_button.dart';
 import 'package:social_sphere/components/profile_photo.dart';
 import 'package:social_sphere/controllers/auth_controller.dart';
+import 'package:social_sphere/controllers/event_controller.dart';
 import 'package:social_sphere/controllers/user_controller.dart';
+import 'package:social_sphere/models/event_model.dart';
 import 'package:social_sphere/widgets/stories.dart';
 
 class HomeTab extends StatelessWidget {
   final UserController userController = Get.find();
   final AuthController authController = Get.find();
+  final EventController eventController = Get.put(EventController());
 
   HomeTab({super.key});
   @override
   Widget build(BuildContext context) {
+    print("Rebuilding Home Tab");
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -91,49 +97,50 @@ class HomeTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "You may like this",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          "You may like this",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(Icons.replay_outlined),
+                          onPressed: () {
+                            eventController.fetchEvents();
+                          },
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 20),
-                    EventCard(
-                      userName: 'Aniket Tekam',
-                      distance: '1.1',
-                      message:
-                          'this is aniket here i want a partner who can understand me and dont have any bestfriend',
-                      profile_path: 'assets/aniket.jpeg',
-                    ),
-                    EventCard(
-                      userName: 'Prajwal Diwnale',
-                      distance: '6.9',
-                      message:
-                          'hello everyone i want a partner who can handle my drugs expenses',
-                      profile_path: 'assets/cokehead.jpg',
-                    ),
-                    EventCard(
-                      userName: 'Prajwal Diwnale',
-                      distance: '6.9',
-                      message:
-                          'hello everyone i want a partner who can handle my drugs expenses',
-                      profile_path: 'assets/cokehead.jpg',
-                    ),
-                    EventCard(
-                      userName: 'Prajwal Diwnale',
-                      distance: '6.9',
-                      message:
-                          'hello everyone i want a partner who can handle my drugs expenses',
-                      profile_path: 'assets/cokehead.jpg',
-                    ),
-                    EventCard(
-                      userName: 'Prajwal Diwnale',
-                      distance: '6.9',
-                      message:
-                          'hello everyone i want a partner who can handle my drugs expenses',
-                      profile_path: 'assets/cokehead.jpg',
-                    ),
+
+                    Obx(() {
+                      if (eventController.isLoading.value) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (eventController.events.isEmpty) {
+                        return Center(child: Text("No events found"));
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: eventController.events.length,
+                        itemBuilder: (context, index) {
+                          final event = eventController.events[index];
+                          return EventCard(
+                            title: event.title,
+                            userName: event.userName ?? "Unknown",
+                            location: event.location,
+                            attendees: event.attendees,
+                            message: event.description,
+                            category: event.category,
+                          );
+                        },
+                      );
+                    }),
                   ],
                 ),
               ),

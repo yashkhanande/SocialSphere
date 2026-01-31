@@ -18,7 +18,7 @@ class EventService {
   Future<void> updateEvent(EventModel event) async {
     try {
       await _firestore.collection("events").doc(event.id).update(event.toMap());
-         Get.snackbar("Success", "Event created successfully");
+      Get.snackbar("Success", "Event created successfully");
     } catch (e) {
       Get.snackbar("Failed", e.toString());
     }

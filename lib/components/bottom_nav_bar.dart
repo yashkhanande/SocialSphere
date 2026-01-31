@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:social_sphere/controllers/create_event_controller.dart';
+import 'package:social_sphere/controllers/event_controller.dart';
 import 'package:social_sphere/controllers/nav_controller.dart';
 import 'package:social_sphere/pages/event/create_event_page.dart';
 
@@ -75,7 +75,6 @@ class BottomNavBar extends StatelessWidget {
             bottom: 38,
             child: InkWell(
               onTap: () {
-               
                 Get.to(() => CreateEventPage());
               },
               child: Container(

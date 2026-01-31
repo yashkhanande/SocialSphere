@@ -11,9 +11,11 @@ class AuthController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final UserController userController = Get.find<UserController>();
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final nameController = TextEditingController();
+  // final emailController = TextEditingController();
+  // final passwordController = TextEditingController();
+  // final nameController = TextEditingController();
+
+  final isLoading = false.obs;
 
   @override
   void onInit() {
@@ -41,37 +43,50 @@ class AuthController extends GetxController {
 
     Get.find<UserController>().setUser(appUser);
   }
-Future<void> signUp(String email, String password, String name) async {
-  final user = await _authService.signUp(email, password);
 
-  final appUser = AppUser(
-    uid: user.uid,
-    email: user.email!,
-    name: name,
-    isVerified: user.emailVerified,
-  );
+  Future<void> signUp(String email, String password, String name) async {
+    try {
+      isLoading.value = true;
+      final user = await _authService.signUp(email, password);
+      if (user != null) {
+        final appUser = AppUser(
+          uid: user.uid,
+          email: user.email!,
+          name: name,
+          isVerified: user.emailVerified,
+        );
+        await _firestore.collection("users").doc(user.uid).set(appUser.toMap());
 
-  await _firestore
-      .collection("users")
-      .doc(user.uid)
-      .set(appUser.toMap());
+        await user.sendEmailVerification();
 
-  await user.sendEmailVerification();
-
-  userController.setUser(appUser);
-}
-
+        userController.setUser(appUser);
+        isLoading.value = false;
+        FirebaseAuth.instance.authStateChanges();
+        Get.snackbar("Successful", "User created successfully");
+      }
+      isLoading.value = false;
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Error", e.toString());
+    }
+  }
 
   void login(String email, String password) async {
-    final user = await _authService.login(email, password);
+    try {
+      isLoading.value = true;
+      final user = await _authService.login(email, password);
+      final userDoc = await _firestore.collection("users").doc(user!.uid).get();
 
-    final userDoc = await _firestore.collection("users").doc(user!.uid).get();
+      final appUser = AppUser.fromMap(userDoc.data()!);
 
-    final appUser = AppUser.fromMap(userDoc.data()!);
-
-    userController.setUser(appUser);
-
-    
+      userController.setUser(appUser);
+      isLoading.value = false;
+      FirebaseAuth.instance.authStateChanges();
+      Get.snackbar("Success", "Login successful");
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Error", e.toString());
+    }
   }
 
   void logOut() async {

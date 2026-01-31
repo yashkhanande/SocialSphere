@@ -54,15 +54,19 @@ class SignUpPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 40),
-
-                AppButton(
-                  labelText: "Sign Up",
-                  ontap: () => authController.signUp(
-                    email.text,
-                    password.text,
-                    name.text,
-                  ),
-                ),
+                Obx(() {
+                  if (authController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return AppButton(
+                    labelText: "Sign Up",
+                    ontap: () => authController.signUp(
+                      email.text,
+                      password.text,
+                      name.text,
+                    ),
+                  );
+                }),
               ],
             ),
           ),

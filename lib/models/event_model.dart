@@ -6,6 +6,7 @@ class EventModel {
   final String location;
   final int attendees;
   final String organizerId;
+  final String? userName;
   final String category;
 
   EventModel({
@@ -17,9 +18,10 @@ class EventModel {
     required this.attendees,
     required this.organizerId,
     required this.category,
+    required this.userName,
   });
 
-   EventModel copyWith({
+  EventModel copyWith({
     String? id,
     String? title,
     String? description,
@@ -28,6 +30,7 @@ class EventModel {
     int? attendees,
     String? organizerId,
     String? category,
+    String? userName,
   }) {
     return EventModel(
       id: id ?? this.id,
@@ -38,25 +41,23 @@ class EventModel {
       attendees: attendees ?? this.attendees,
       organizerId: organizerId ?? this.organizerId,
       category: category ?? this.category,
+      userName: userName ?? this.userName,
     );
   }
 
-  factory EventModel.fromMap(
-  Map<String, dynamic> map,
-  String documentId,
-) {
-  return EventModel(
-    id: documentId,
-    title: map['title'],
-    description: map['description'],
-    date: map['date'],
-    location: map['location'],
-    attendees: map['attendees'],
-    organizerId: map['organizerId'],
-    category: map['category'],
-  );
-}
-
+  factory EventModel.fromMap(Map<String, dynamic> map, String documentId) {
+    return EventModel(
+      id: documentId,
+      title: map['title'],
+      description: map['description'],
+      date: map['date'],
+      location: map['location'],
+      attendees: map['attendees'],
+      organizerId: map['organizerId'],
+      category: map['category'],
+      userName: map['userName'],
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -68,7 +69,7 @@ class EventModel {
       'attendees': attendees,
       'organizerId': organizerId,
       'category': category,
+      'userName': userName,
     };
   }
-
 }

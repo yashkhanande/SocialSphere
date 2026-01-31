@@ -4,16 +4,22 @@ import 'package:get/get.dart';
 import 'package:social_sphere/components/app_colors.dart';
 
 class EventCard extends StatelessWidget {
+  final String title;
   final String userName;
-  final String distance;
+  final String location;
   final String message;
-  final String profile_path;
+  final String? profile_path;
+  final String? category;
+  final int attendees;
   const EventCard({
     super.key,
     required this.userName,
-    required this.distance,
+    required this.location,
     required this.message,
-    required this.profile_path,
+    this.profile_path,
+    required this.category,
+    required this.title,
+    required this.attendees,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,8 +33,11 @@ class EventCard extends StatelessWidget {
         border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: 55,
@@ -38,66 +47,74 @@ class EventCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: AppColors.gold, width: 1),
                   image: DecorationImage(
-                    image: AssetImage(profile_path),
+                    image: AssetImage(profile_path ?? "assets/man.png"),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               const SizedBox(width: 15),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      userName,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    userName,
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                  ),
+
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      location,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 10,
+                        color: Colors.lightBlue,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Icon(Icons.location_on, color: Colors.lightBlue),
-                        const SizedBox(width: 5),
-                        Text(
-                          distance,
-                          style: TextStyle(
-                            color: Colors.lightBlue,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               Spacer(),
-              IconButton(
-                onPressed: () {
-                  Get.snackbar(
-                    "Coming soon",
-                    "we are currently working on this app ",
-                  );
-                },
-                icon: Icon(Icons.more_horiz),
-              ),
+
+              // IconButton(
+              //   onPressed: () {
+              //     Get.snackbar(
+              //       "Coming soon",
+              //       "we are currently working on this app ",
+              //     );
+              //   },
+              //   icon: Icon(Icons.more_horiz),
+              // ),
             ],
           ),
           const SizedBox(height: 10),
-          Container(
-            width: MediaQuery.widthOf(context),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
 
-              color: Colors.white.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              message,
+          if (title.isNotEmpty)
+            Text(
+              title,
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
             ),
-          ),
+
+          if (message.isNotEmpty)
+            Container(
+              margin: EdgeInsets.only(top: 5),
+              width: MediaQuery.widthOf(context),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                // border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                color: Colors.white.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                message,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
           const SizedBox(height: 15),
           Row(
             children: [
@@ -111,9 +128,33 @@ class EventCard extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  "Chill",
+                  category ?? "Unknown",
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
+              ),
+              // Spacer(),
+
+              // Text("Required ${attendees} people", style: TextStyle()),
+              const SizedBox(width: 20),
+              Row(
+                children: [
+                  Icon(Icons.people),
+                  const SizedBox(width: 5),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    child: Text(
+                      attendees.toString(),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Spacer(),
               InkWell(

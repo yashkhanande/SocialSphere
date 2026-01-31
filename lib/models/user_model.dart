@@ -11,8 +11,13 @@ class AppUser {
     required this.isVerified,
   });
 
-  factory AppUser.fromMap(Map<String, dynamic> map){
-    return AppUser(uid: map['uid'], email: map['email'], name: map['name'], isVerified: map['isVerified']);
+  factory AppUser.fromMap(Map<String, dynamic>? map){
+    return AppUser(
+      uid: map?['uid'] ?? '',
+      email: map?['email'] ?? '',
+      name: map?['name'] ?? '',
+      isVerified: map?['isVerified'] ?? false,
+    );
   }
   Map<String, dynamic> toMap() {
     return {
