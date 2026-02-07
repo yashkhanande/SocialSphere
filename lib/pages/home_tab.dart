@@ -1,16 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sphere/components/event_card.dart';
 import 'package:social_sphere/components/live_event_card.dart';
 import 'package:social_sphere/components/notification_button.dart';
-import 'package:social_sphere/components/profile_photo.dart';
 import 'package:social_sphere/controllers/auth_controller.dart';
 import 'package:social_sphere/controllers/event_controller.dart';
 import 'package:social_sphere/controllers/user_controller.dart';
-import 'package:social_sphere/models/event_model.dart';
-import 'package:social_sphere/widgets/stories.dart';
 
 class HomeTab extends StatelessWidget {
   final UserController userController = Get.find();

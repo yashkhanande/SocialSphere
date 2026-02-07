@@ -8,6 +8,7 @@ class EventModel {
   final String organizerId;
   final String? userName;
   final String category;
+  final String? imageUrl;
 
   EventModel({
     required this.id,
@@ -19,6 +20,7 @@ class EventModel {
     required this.organizerId,
     required this.category,
     required this.userName,
+    this.imageUrl,
   });
 
   EventModel copyWith({
@@ -31,6 +33,7 @@ class EventModel {
     String? organizerId,
     String? category,
     String? userName,
+    String? imageUrl,
   }) {
     return EventModel(
       id: id ?? this.id,
@@ -42,6 +45,7 @@ class EventModel {
       organizerId: organizerId ?? this.organizerId,
       category: category ?? this.category,
       userName: userName ?? this.userName,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
@@ -56,6 +60,7 @@ class EventModel {
       organizerId: map['organizerId'],
       category: map['category'],
       userName: map['userName'],
+      imageUrl: map['imageUrl'],
     );
   }
 
@@ -70,6 +75,7 @@ class EventModel {
       'organizerId': organizerId,
       'category': category,
       'userName': userName,
+      'imageUrl': imageUrl,
     };
   }
 }

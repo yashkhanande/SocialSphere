@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sphere/components/categories.dart';
@@ -42,7 +41,7 @@ class CreateEventPage extends StatelessWidget {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(16),
                         onTap: () {
-                          Get.snackbar("Camera", "Open camera / gallery");
+                          controller.selectFile();
                         },
                         child: Container(
                           width: 120,

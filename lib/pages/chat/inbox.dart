@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:social_sphere/components/categories.dart';
 import 'package:social_sphere/components/chat_card.dart';
-import 'package:social_sphere/components/profile_photo.dart';
 import 'package:social_sphere/components/search_button.dart';
-import 'package:social_sphere/widgets/stories.dart';
 
 class Inbox extends StatelessWidget {
   final categories = const [

@@ -1,5 +1,6 @@
-import 'package:flutter/widgets.dart';
+import 'dart:io';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:social_sphere/controllers/user_controller.dart';
 import 'package:social_sphere/models/event_model.dart';
 import 'package:social_sphere/models/user_model.dart';
@@ -22,8 +23,31 @@ class EventController extends GetxController {
 
   final eventService = EventService();
 
+  final Rx<File?> selectedImages = Rx<File?>(null);
+
   void increment() {
     peopleCount.value++;
+  }
+
+  Future selectFile() async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
+
+    if (image != null) {
+      selectedImages.value = File(image.path);
+    }
+  }
+
+  Future<String?> uploadEventImage(String eventId) async {
+    if (selectedImages.value == null) {
+      return null;
+    }
+    return await eventService.uploadEventImage(
+      eventId,
+      selectedImages.value!.path,
+    );
   }
 
   void decrement() {
@@ -58,6 +82,10 @@ class EventController extends GetxController {
       );
       isLoading.value = true;
       await eventService.createEvent(eventModel);
+      final imageUrl = await uploadEventImage(eventModel.id);
+      if (imageUrl != null) {
+        eventModel = eventModel.copyWith(imageUrl: imageUrl);
+      }
       isLoading.value = false;
     } else {
       Get.snackbar("Error", "User not logged in");
@@ -101,7 +129,7 @@ class EventController extends GetxController {
     }
   }
 
-  bool validate(String title  , String location) {
+  bool validate(String title, String location) {
     if (title.trim().isEmpty) {
       Get.snackbar("Error", "Event title is required");
       return false;
